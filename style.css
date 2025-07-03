@@ -54,6 +54,20 @@
 
   --color-even-bg: var(--color-black);
   --color-even-text: var(--color-text-light);
+
+  --toggle-bg: var(--color-white);
+  --toggle-text: var(--color-black);
+}
+
+body.light-theme {
+  --color-background-dark: #fdfdfd;
+  --color-even-bg: #f0f0f0;
+  --color-even-text: #000000;
+  --color-odd-bg: #ffffff;
+  --color-odd-text: #000000;
+  --color-triangle-alt: #bbbbbb;
+  --toggle-bg: var(--color-black);
+  --toggle-text: var(--color-white);
 }
 
 .theme-blue {
@@ -346,6 +360,26 @@ a {
   border-color: transparent var(--color-black) transparent transparent;
   border-width: 11px 19.1px 11px 0;
   right: var(--spacing-s);
+}
+
+#toggle-theme {
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 12px 28px;
+  font-size: 16px;
+  font-family: var(--font-secondary);
+  text-transform: uppercase;
+  font-weight: bold;
+  background-color: var(--toggle-bg);
+  color: var(--toggle-text);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s, transform 0.2s;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#toggle-theme:hover {
+  transform: translateY(-2px);
 }
 
 /* ========================================= */

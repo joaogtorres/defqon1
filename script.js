@@ -758,4 +758,34 @@ filterItems.forEach((item) => {
 
 document.addEventListener("DOMContentLoaded", () => {
   renderLineupFor("thursday");
+
+  const toggleButton = document.getElementById("toggle-theme");
+  const themeSelect = document.getElementById("theme-select");
+
+  const applyTheme = (theme) => {
+    if (theme === "light") {
+      document.body.classList.add("light-theme");
+    } else {
+      document.body.classList.remove("light-theme");
+    }
+
+    if (themeSelect) {
+      themeSelect.value = theme;
+    }
+  };
+
+  if (toggleButton) {
+    toggleButton.addEventListener("click", () => {
+      const isLight = document.body.classList.toggle("light-theme");
+      if (themeSelect) {
+        themeSelect.value = isLight ? "light" : "default";
+      }
+    });
+  }
+
+  if (themeSelect) {
+    themeSelect.addEventListener("change", () => {
+      applyTheme(themeSelect.value);
+    });
+  }
 });
