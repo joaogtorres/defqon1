@@ -762,24 +762,77 @@ document.addEventListener("DOMContentLoaded", () => {
   const toggleButton = document.getElementById("toggle-theme");
   const themeSelect = document.getElementById("theme-select");
 
+  const ensureHistoryContainer = () => {
+    let historyList = document.getElementById("theme-history-list");
+    if (!historyList) {
+      const historyContainer = document.createElement("div");
+      historyContainer.className = "footer-column theme-history";
+      historyContainer.innerHTML = `
+        <h3 class="footer-heading">Theme History</h3>
+        <ul class="footer-links" id="theme-history-list"></ul>
+      `;
+      const footerColumns = document.querySelector(".footer-columns");
+      if (footerColumns) {
+        footerColumns.appendChild(historyContainer);
+        historyList = historyContainer.querySelector("#theme-history-list");
+      }
+    }
+    return historyList;
+  };
+
+  const addToHistory = (theme) => {
+    const timestamp = new Date().toLocaleString();
+    const li = document.createElement("li");
+    li.textContent = `${timestamp} — ${
+      theme === "light" ? "Light Mode" : "Dark Mode"
+    }`;
+
+    const historyList = ensureHistoryContainer();
+    if (!historyList) return;
+    historyList.appendChild(li);
+    historyList.scrollTop = historyList.scrollHeight;
+
+    const history = JSON.parse(localStorage.getItem("themeHistory")) || [];
+    history.push({ theme, timestamp });
+    localStorage.setItem("themeHistory", JSON.stringify(history));
+  };
+
+  const loadHistory = () => {
+    const history = JSON.parse(localStorage.getItem("themeHistory")) || [];
+    const historyList = ensureHistoryContainer();
+    if (!historyList) return;
+    historyList.innerHTML = "";
+    history.forEach(({ theme, timestamp }) => {
+      const li = document.createElement("li");
+      li.textContent = `${timestamp} — ${
+        theme === "light" ? "Light Mode" : "Dark Mode"
+      }`;
+      historyList.appendChild(li);
+    });
+  };
+
   const applyTheme = (theme) => {
     if (theme === "light") {
       document.body.classList.add("light-theme");
     } else {
       document.body.classList.remove("light-theme");
     }
-
-    if (themeSelect) {
-      themeSelect.value = theme;
-    }
+    localStorage.setItem("selectedTheme", theme);
+    if (themeSelect) themeSelect.value = theme;
+    addToHistory(theme);
   };
+
+  const savedTheme = localStorage.getItem("selectedTheme") || "default";
+  applyTheme(savedTheme);
+  loadHistory();
 
   if (toggleButton) {
     toggleButton.addEventListener("click", () => {
       const isLight = document.body.classList.toggle("light-theme");
-      if (themeSelect) {
-        themeSelect.value = isLight ? "light" : "default";
-      }
+      const theme = isLight ? "light" : "default";
+      localStorage.setItem("selectedTheme", theme);
+      if (themeSelect) themeSelect.value = theme;
+      addToHistory(theme);
     });
   }
 

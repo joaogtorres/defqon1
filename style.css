@@ -563,6 +563,35 @@ a {
   color: var(--color-white);
 }
 
+.theme-history {
+  max-height: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.theme-history h3 {
+  margin-bottom: 10px;
+  font-family: var(--font-secondary);
+  font-size: 18px;
+}
+
+.theme-history ul {
+  flex: 1;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-family: var(--font-secondary);
+  font-size: 14px;
+  padding-right: 10px;
+}
+
+.theme-history li {
+  margin-bottom: 4px;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
 /* ========================================= */
 /* RESPONSIVE                                */
 /* ========================================= */
